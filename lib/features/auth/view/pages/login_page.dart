@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/theme/app_pallete.dart';
+import 'package:spotify_clone/features/auth/repositories/auth_remote_repository.dart';
 import 'package:spotify_clone/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:spotify_clone/features/auth/view/widgets/custom_field.dart';
 
@@ -59,22 +60,35 @@ class _LoginPageState extends State<LoginPage> {
               ),
               AuthGradientButton(
                 buttonText: 'Sign In',
-                onTap: () {},
+                onTap: () async {
+                  await AuthRemoteRepository().login(
+                      email: emailController.text,
+                      password: passwordController.text);
+                },
               ),
               const SizedBox(
                 height: 20,
               ),
-              RichText(
-                  text: TextSpan(
-                      text: 'Don\'t have an account ',
-                      style: Theme.of(context).textTheme.titleMedium,
-                      children: const [
-                    TextSpan(
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()));
+                },
+                child: RichText(
+                    text: TextSpan(
+                        text: 'Don\'t have an account ',
+                        style: Theme.of(context).textTheme.titleMedium,
+                        children: const [
+                      TextSpan(
                         text: 'Sign Up',
                         style: TextStyle(
                             color: Pallete.gradient2,
-                            fontWeight: FontWeight.bold))
-                  ]))
+                            fontWeight: FontWeight.bold),
+                      )
+                    ])),
+              )
             ],
           ),
         ),
