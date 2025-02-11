@@ -1,3 +1,6 @@
+import 'dart:io';
+
 class ServerConstant {
-  static const String serverURL='http://localhost:5000';
+  static String serverURL =
+      Platform.isAndroid ? 'http://10.0.2.2:5000' : 'http://localhost:5000';
 }
